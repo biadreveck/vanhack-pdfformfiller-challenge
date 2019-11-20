@@ -45,9 +45,15 @@ namespace PdfFormFiller.Api.Controllers
                 return BadRequest();
             }
 
-            var pdfFormMap = _pdfFormRepository.Add(map);
-            return Ok(pdfFormMap);
-
+            try
+            {
+                var pdfFormMap = _pdfFormRepository.Add(map);
+                return Ok(pdfFormMap);
+            } 
+            catch (EntityAlreadyExistsException)
+            {
+                return Conflict();
+            }
         }
 
         [HttpPut("{pdfCode}")]

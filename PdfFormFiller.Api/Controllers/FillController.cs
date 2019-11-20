@@ -36,7 +36,7 @@ namespace PdfFormFiller.Api.Controllers
             _dynamicRepository = dynamicRepository;
         }
 
-        [HttpGet("fill/{pdfCode}")]
+        [HttpGet("{pdfCode}")]
         public ActionResult Get(string pdfCode, [FromQuery(Name = "ids")] List<string> formMapCollectionsIds)
         {
             PdfFormMap pdfFormMap;
@@ -95,63 +95,6 @@ namespace PdfFormFiller.Api.Controllers
             //return File(stream, "application/pdf", "FileDownloadName.ext");
             var stream = new FileStream(generatedFilePath, FileMode.Open);
             return File(stream, "application/pdf", generatedFileName);
-        }
-
-        [HttpGet("check/{pdfCode}")]
-        public ActionResult Get(string pdfCode, [FromQuery(Name = "page")] int pageNumber)
-        {
-            var templateFilePath = $"{pdfCode}-filled.pdf";
-            if (!string.IsNullOrEmpty(_pdfFilesOptions.TemplatePath))
-            {
-                templateFilePath = $"{_pdfFilesOptions.TemplatePath}{Path.DirectorySeparatorChar}{templateFilePath}";
-            }
-
-            using PdfReader reader = new PdfReader(templateFilePath);
-            reader.SetUnethicalReading(true);
-            using PdfDocument pdf = new PdfDocument(reader);
-
-            var form = PdfAcroForm.GetAcroForm(pdf, false);
-
-            var fields = form.GetFormFields();
-            var obj = new ExpandoObject();
-            foreach (string field in fields.Keys)
-            {
-                PdfFormField formField = form.GetField(field);
-                if (formField.IsReadOnly()) continue;
-
-                var pdfValue = formField.GetValue();
-                if (formField.GetWidgets() == null) continue;
-                if (formField.GetWidgets().Count <= 0) continue;
-
-                var page = formField.GetWidgets().First().GetPage();
-
-                if (pdf.GetPageNumber(page) != pageNumber) continue;
-
-                bool isButton = (formField is PdfButtonFormField);
-                bool isText = (formField is PdfTextFormField);
-
-                if (!isText && !isButton) continue;
-
-                dynamic itemObj = new ExpandoObject();
-
-                var value = pdfValue?.ToString();
-                if (!string.IsNullOrEmpty(value?.ToString()))
-                {
-                    if (isButton)
-                    {
-                        value = value.Replace("/", "");
-                        itemObj.IsRadio = ((PdfButtonFormField)formField).IsRadio();
-                        itemObj.States = formField.GetAppearanceStates();
-                    }
-                }
-
-                itemObj.Type = formField.GetType().Name;
-                itemObj.WidgetsCount = formField.GetWidgets().Count;
-                itemObj.Value = value;
-                ((IDictionary<string, object>)obj).Add(field, itemObj);
-            }
-
-            return Ok(obj);
         }
 
         private void FillPdfForm(string originalPdfFile, string destPdfFile, PdfFormMap formMap, Dictionary<string, dynamic> dbValues)

@@ -32,10 +32,20 @@ namespace PdfFormFiller.Api.Controllers
         [HttpGet("{pdfCode}")]
         public ActionResult<PdfScanResult> Get(string pdfCode)
         {
+            if (string.IsNullOrEmpty(pdfCode))
+            {
+                return BadRequest();
+            }
+
             var templateFilePath = $"{pdfCode}.pdf";
             if (!string.IsNullOrEmpty(_pdfFilesOptions.TemplatePath))
             {
                 templateFilePath = $"{_pdfFilesOptions.TemplatePath}{Path.DirectorySeparatorChar}{templateFilePath}";
+            }
+
+            if (!System.IO.File.Exists(templateFilePath))
+            {
+                return NotFound();
             }
 
             using PdfReader reader = new PdfReader(templateFilePath);
@@ -126,7 +136,7 @@ namespace PdfFormFiller.Api.Controllers
                 scanPages[pageNumber - 1] = scanPage;
             }
 
-            result.Pages = scanPages.ToList();
+            result.Pages = scanPages.Where(sp => sp != null).ToList();
             return Ok(result);
         }
     }

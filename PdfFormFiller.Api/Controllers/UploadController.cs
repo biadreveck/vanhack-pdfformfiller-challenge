@@ -26,7 +26,6 @@ namespace PdfFormFiller.Api.Controllers
         /// Uploads an pdf to the API server and saves it.
         /// </summary>
         /// <param name="pdfCode">Code that will be used to access the file and link it to resources</param>
-        /// <returns>204 - No Content</returns>
         [HttpPost("{pdfCode}")]
         public async Task<ActionResult> PostFile(string pdfCode, [FromForm(Name = "file")] IFormFile file)
         {
@@ -34,11 +33,16 @@ namespace PdfFormFiller.Api.Controllers
             {
                 return BadRequest();
             }
-
+            
             var templateFilePath = $"{pdfCode}.pdf";
             if (!string.IsNullOrEmpty(_pdfFilesOptions.TemplatePath))
             {
                 templateFilePath = $"{_pdfFilesOptions.TemplatePath}{Path.DirectorySeparatorChar}{templateFilePath}";
+            }
+
+            if (System.IO.File.Exists(templateFilePath))
+            {
+                return Conflict();
             }
 
             using (var stream = System.IO.File.Create(templateFilePath))
