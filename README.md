@@ -136,7 +136,7 @@ Content-Type: application/json
   ]
 }
 ```
-Response object: PdfFormMap
+Response object: [PdfFormMap](#pdfformmap)
 #### POST /pdfform/v1/map
 This endpoint is used to create a map for a PDF file. This map is required to fill the PDF form dynamically.
 
@@ -178,7 +178,7 @@ Content-Type: application/json
   ]
 }
 ```
-Request object: PdfFormMap
+Request object: [PdfFormMap](#pdfformmap)
 
 Example response:
 ```
@@ -213,7 +213,7 @@ Content-Type: application/json
   ]
 }
 ```
-Response object: PdfFormMap
+Response object: [PdfFormMap](#pdfformmap)
 #### PUT /pdfform/v1/map/{pdfCode}
 This endpoint is used to update the information of an existing map of the PDF file.
 + Params:
@@ -258,7 +258,7 @@ Content-Type: application/json
   ]
 }
 ```
-Request object: PdfFormMap
+Request object: [PdfFormMap](#pdfformmap)
 #### DELETE /pdfform/v1/map/{pdfCode}
 This is endpoint used to get information about the form on a uploaded PDF file. You can use this as a helper to create a PDF form map.
 + Params:
@@ -299,36 +299,36 @@ You can get more information about the API accessing Swagger, when running your 
 + Id *string*: id of the pdf form map.
 + PdfCode *string*: pdf code of the PDF file that the map is linked to.
 + Collections *string[]*: list of database collections names that this map is related to.
-+ FieldMaps *PdfFormFieldMap[]*: list of fields maps linking values to the PDF form fields.
++ FieldMaps *[PdfFormFieldMap](#pdfformfield)[]*: list of fields maps linking values to the PDF form fields.
 #### PdfFormFieldMap
 + Name *string*: name of the PDF file form field to linked to this field map.
-+ Condition *PdfMapCondition*: condition to fill this field on PDF form.
-+ Value *PdfMapDynamicValue*: fill the PDF form field with this value, if the condition is true.
++ Condition *[PdfMapCondition](#pdfmapcondition)*: condition to fill this field on PDF form.
++ Value *[PdfMapDynamicValue](#pdfmapdynamicvalue)*: fill the PDF form field with this value, if the condition is true.
 #### PdfMapCondition
-+ Type *PdfMapConditionType*: condition type.
-+ Left *PdfMapDynamicValue*: left value of the condition.
-+ Right *PdfMapDynamicValue*: right value of the condition.
++ Type *[PdfMapConditionType](#pdfmapconditiontype)*: condition type.
++ Left *[PdfMapDynamicValue](#pdfmapdynamicvalue)*: left value of the condition.
++ Right *[PdfMapDynamicValue](#pdfmapdynamicvalue)*: right value of the condition.
 #### PdfMapArithmetic
-+ Type *PdfMapArithmeticType*: arithmetic type.
-+ Left *PdfMapDynamicValue*: left value of the arithmetic.
-+ Right *PdfMapDynamicValue*: right value of the arithmetic.
++ Type *[PdfMapArithmeticType]*: arithmetic type.
++ Left *[PdfMapDynamicValue](#pdfmapdynamicvalue)*: left value of the arithmetic.
++ Right *[PdfMapDynamicValue](#pdfmapdynamicvalue)*: right value of the arithmetic.
 #### PdfMapDynamicValue
-+ Type *PdfMapDynamicValueType*: dynamic value type.
-+ Value *string|PdfMapDatabaseValue|PdfMapArithmetic*: a dynamic value. Can be fixed, retrieved from database or some calculation.
++ Type *[PdfMapDynamicValueType](#pdfmapdynamicvaluetype)*: dynamic value type.
++ Value *string|[PdfMapDatabaseValue](#pdfmapdatabasevalue)|[PdfMapArithmetic](#pdfmaparithmetic)*: a dynamic value. Can be fixed, retrieved from database or some calculation.
 #### PdfMapDatabaseValue
 + Collection *string*: collection name from which the value will be retrieved.
 + DocumentField *string*: document field from the collection from which the value will be retrieved. *(can be nested like: field.nestedField)*
 #### PdfScanResult
 + PdfCode *string*: pdf code of the scanned PDF file.
-+ Pages *PdfScanPage[]*: list of pages informations of the scanned file.
++ Pages *[PdfScanPage](#pdfscanpage)[]*: list of pages informations of the scanned file.
 #### PdfScanPage
 + Number *int*: page number.
 + Image *string*: page image in base64 **[not implemented]**.
-+ FormFields *PdfScanFormField[]*: list of informations of the form fields on the page.
++ FormFields *[PdfScanFormField](#pdfscanformfield)[]*: list of informations of the form fields on the page.
 #### PdfScanFormField
 + Name *string*: form field name. [use this to map a form field to a dynamic value]
-+ Position *Position*: position of the form field on the page.
-+ Size *Size*: size of the form field.
++ Position *[Position](#position)*: position of the form field on the page.
++ Size *[Size](#size)*: size of the form field.
 #### Position
 + X *double*: X axis of the pposition.
 + Y *double*: Y axis of the pposition.
