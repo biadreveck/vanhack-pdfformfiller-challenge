@@ -10,7 +10,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="BitMiracle.Docotic.Pdf" Version="5.10.9957" />
     <PackageReference Include="itext7" Version="7.1.8" />
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />

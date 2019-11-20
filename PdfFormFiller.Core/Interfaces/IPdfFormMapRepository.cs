@@ -4,6 +4,6 @@ namespace PdfFormFiller.Core.Interfaces
 {
 	public interface IPdfFormMapRepository : IRepository<PdfFormMap> 
 	{
-		PdfFormMap GetByFormId(string formId);
+		//PdfFormMap GetByFormId(string formId);
 	}
 }

@@ -74,7 +74,7 @@ namespace PdfFormFiller.Api
             }
 
 			app.UseCors("AllowAll");
-			app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseMvc();
 			app.UseApiVersioning();
 			app.UseMvcWithDefaultRoute();

@@ -9,13 +9,14 @@ namespace PdfFormFiller.Data.Repositories
 	{
 		public PdfFormMapRepository(IFileContextFactory factory) : base(factory) { }
 
-		public PdfFormMap GetByFormId(string formId)
-		{
-			var items = Find(pfm => pfm.FormId == formId);
-			if (items == null) throw new EntityNotFoundException();
-			return items.First();
-		}
+		//public PdfFormMap GetByFormId(string formId)
+		//{
+		//	var items = Find(pfm => pfm.PdfCode == formId);
+		//	if (items == null) throw new EntityNotFoundException();
+		//	return items.First();
+		//}
 
 		public override string FileName { get; } = "pdfformmaps.json";
-	}
+        public override string GenerateId(PdfFormMap entity) => $"{entity.PdfCode}";
+    }
 }
