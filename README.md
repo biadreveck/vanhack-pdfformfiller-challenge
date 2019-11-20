@@ -35,14 +35,21 @@ To run from Visual Studio, you must have installed [Visual Studio 2019](https://
 ## Usage
 Assuming you are running the project locally, the base url depends on how you run the project and what is configured on *launchSettings.json* file.
 ### Fill PDF form
-#### GET /api/v1/pdfform/:formId/fill?ids=[arrayResourceIds]
+#### GET /api/v1/pdfform/:pdfFormId/fill?ids=[arrayResourceIds]
+Fill the specified PDF form file and returns to the filled PDF.
 + Params:
-  + formId: PDF form id you which to fill
+  + pdfFormId: PDF form id you which to fill
   + arrayResourceIds: list of DB resources ids to fill the form with their data (these are the resources mapped to the form)
 
-Example: https://localhost:5001/api/pdfform/ESDC-EMP5624/fill?ids[0]=employerid&ids[1]=jobofferid
+Responses:
++ 200 - OK
++ 400 - Bad Request
++ 404 - Not Found
++ 500 - Internal Server Error
 
-Response: the filled PDF file
+Example request: https://localhost:5001/api/pdfform/ESDC-EMP5624/fill?ids[0]=employerid&ids[1]=jobofferid
+
+Exemple response: the filled PDF file
 ```
 HTTP/1.0 200 OK
 Content-Type: application/pdf
