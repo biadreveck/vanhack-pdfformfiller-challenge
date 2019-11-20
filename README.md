@@ -88,7 +88,7 @@ Content-Type: application/json
   ]
 }
 ```
-Response object: PdfScanResult
+Response object: [PdfScanResult](#pdfscanresult)
 ### Map
 #### GET /pdfform/v1/map/{pdfCode}
 This endpoint is used to retrieve a existing map of the PDF file.
