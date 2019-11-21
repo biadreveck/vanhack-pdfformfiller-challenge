@@ -354,3 +354,5 @@ You can get more information about the API accessing Swagger, when running your 
 + [0] Fixed: the dynamic value is a fixed string value.
 + [1] Database: the dynamic value is a PdfMapDatabaseValue, linked to a DB document field.
 + [2] Arithmetic: the dynamic value is a PdfMapArithmetic with some calculation.
+## Notes
++ Due to time I was unable to generated mapped data to all pages of the challenge PDF file, so the API will only fill the first pages. But the data can still be generated manually on "DB Storage/pdfformmaps.json" or through the map endpoint.
